@@ -18,7 +18,7 @@ This plan breaks the static e-commerce site into **6 phases**, each delivering a
 - [x] Create GitHub Actions workflow (`.github/workflows/pages.yml`)
 - [x] Add `.gitignore`, `LICENSE` (MIT), ESLint config
 - [x] Verify `npm run build` succeeds
-- [ ] Push to GitHub, confirm Pages deploys
+- [x] Push to GitHub, confirm Pages deploys
 
 ### Deliverable
 ✅ Blank site live at `https://<username>.github.io/desi-rasoi/`

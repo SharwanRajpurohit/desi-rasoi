@@ -3,6 +3,11 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
+import { initializeIfNeeded } from './services/seed'
+import './services/debug'
+
+// Seed localStorage with demo data on first visit
+initializeIfNeeded()
 
 const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
 
