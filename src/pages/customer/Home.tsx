@@ -1,73 +1,126 @@
 import { Link } from 'react-router-dom'
-import { ShoppingBag, ChefHat } from 'lucide-react'
+import { ShoppingBag, ChevronRight } from 'lucide-react'
+import { Button } from '../../components/ui/Button'
+
+const CATEGORIES = [
+  { slug: 'sweets',       icon: '🍬', nameEn: 'Sweets & Mithai',   nameHi: 'मिठाई' },
+  { slug: 'snacks',       icon: '🥨', nameEn: 'Snacks & Namkeen',  nameHi: 'नमकीन' },
+  { slug: 'pickles',      icon: '🫙', nameEn: 'Pickles & Chutney', nameHi: 'अचार' },
+  { slug: 'spices',       icon: '🌶️', nameEn: 'Spices & Masala',   nameHi: 'मसाले' },
+  { slug: 'grains',       icon: '🌾', nameEn: 'Grains & Pulses',   nameHi: 'अनाज और दाल' },
+  { slug: 'ready-to-eat', icon: '🍽️', nameEn: 'Ready to Eat',      nameHi: 'तैयार भोजन' },
+  { slug: 'beverages',    icon: '🥤', nameEn: 'Beverages',         nameHi: 'पेय' },
+  { slug: 'gift-hampers', icon: '🎁', nameEn: 'Gift Hampers',      nameHi: 'गिफ्ट हैम्पर' },
+]
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-sand">
-      <header className="border-b border-sand-dark bg-white/80 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-          <div className="flex items-center gap-2">
-            <ChefHat className="h-8 w-8 text-brand" />
-            <div>
-              <h1 className="font-display text-xl font-bold text-charcoal">Desi Rasoi</h1>
-              <p className="font-hindi text-xs text-warm-gray">देसी रसोई</p>
-            </div>
-          </div>
-          <nav className="flex items-center gap-6 text-sm font-medium">
-            <span className="text-brand">Home</span>
-            <span className="text-warm-gray">Products</span>
-            <span className="text-warm-gray">Cart</span>
-            <Link to="/admin" className="text-indigo hover:text-indigo-light">
-              Admin
-            </Link>
-          </nav>
-        </div>
-      </header>
-
-      <main>
-        <section className="bg-gradient-to-br from-brand to-marigold px-4 py-20 text-white">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="font-display text-4xl font-bold md:text-5xl">
-              Taste of Rajasthan
-            </h2>
-            <p className="mt-2 font-hindi text-lg opacity-90">राजस्थान का स्वाद, आपके द्वार</p>
-            <p className="mx-auto mt-4 max-w-xl text-lg opacity-90">
-              Authentic traditional food products — from Ghevar to Ker Sangri, delivered to your door.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <button
-                type="button"
-                className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-brand shadow-md transition hover:bg-sand"
-              >
-                <ShoppingBag className="h-5 w-5" />
+    <div>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand via-brand-dark to-indigo px-4 py-20 text-white">
+        {/* Decorative pattern */}
+        <div className="pointer-events-none absolute inset-0 opacity-5"
+          style={{ backgroundImage: 'radial-gradient(circle at 20px 20px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}
+        />
+        <div className="relative mx-auto max-w-4xl text-center">
+          <span className="inline-block rounded-full bg-white/10 px-4 py-1 text-sm font-medium text-white/90 backdrop-blur mb-4">
+            🏺 Traditional • Authentic • Rajasthani
+          </span>
+          <h1 className="font-display text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
+            Taste of Rajasthan
+          </h1>
+          <p className="mt-2 font-hindi text-xl text-white/80">राजस्थान का स्वाद, आपके द्वार</p>
+          <p className="mx-auto mt-5 max-w-xl text-lg text-white/80">
+            Authentic traditional food — from Ghevar to Ker Sangri — crafted in Rajasthani kitchens and delivered to your door.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link to="/products">
+              <Button size="lg" variant="secondary" icon={<ShoppingBag className="h-5 w-5" />}>
                 Shop Now
-              </button>
-              <button
-                type="button"
-                className="rounded-lg border-2 border-white px-6 py-3 font-semibold transition hover:bg-white/10"
-              >
-                View Categories
-              </button>
-            </div>
+              </Button>
+            </Link>
+            <Link to="/about">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand">
+                Our Story
+              </Button>
+            </Link>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="mx-auto max-w-4xl px-4 py-16 text-center">
-          <p className="text-sm font-semibold uppercase tracking-wider text-brand">
-            Phase 0 Complete
-          </p>
-          <h3 className="mt-2 font-display text-2xl text-charcoal">
-            React + Vite + Tailwind scaffold is ready
-          </h3>
-          <p className="mt-4 text-warm-gray">
-            Customer catalog, cart, checkout, and admin panel coming in upcoming phases.
-          </p>
-        </section>
-      </main>
+      {/* Categories */}
+      <section className="mx-auto max-w-6xl px-4 py-14">
+        <div className="mb-8 flex items-end justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-brand">Explore</p>
+            <h2 className="mt-1 font-display text-2xl text-charcoal">Shop by Category</h2>
+          </div>
+          <Link
+            to="/products"
+            className="flex items-center gap-1 text-sm font-medium text-brand hover:text-brand-dark"
+          >
+            View all <ChevronRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+          {CATEGORIES.map((cat) => (
+            <Link
+              key={cat.slug}
+              to={`/categories/${cat.slug}`}
+              className="group flex flex-col items-center gap-2 rounded-xl bg-white p-4 text-center shadow-card transition hover:-translate-y-1 hover:shadow-md"
+            >
+              <span className="text-3xl">{cat.icon}</span>
+              <span className="text-xs font-medium text-charcoal leading-tight group-hover:text-brand transition-colors">
+                {cat.nameEn}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
 
-      <footer className="border-t border-sand-dark bg-sand-dark/30 px-4 py-6 text-center text-sm text-warm-gray">
-        <p>© 2026 Desi Rasoi — Demo Mode</p>
-      </footer>
+      {/* Featured placeholder — Phase 3 will load real products */}
+      <section className="bg-sand-dark/40 px-4 py-14">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8">
+            <p className="text-xs font-semibold uppercase tracking-wider text-brand">Handpicked</p>
+            <h2 className="mt-1 font-display text-2xl text-charcoal">Featured Products</h2>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {['Ghevar', 'Bikaneri Bhujia', 'Dal Baati Churma Kit', 'Thandai Mix'].map((name) => (
+              <div key={name} className="rounded-xl bg-white p-4 shadow-card">
+                <div className="mb-3 flex h-36 items-center justify-center rounded-lg bg-sand text-4xl">
+                  🍽️
+                </div>
+                <p className="font-display text-sm font-semibold text-charcoal">{name}</p>
+                <p className="text-xs text-warm-gray">Loading in Phase 3…</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Link to="/products">
+              <Button variant="outline" icon={<ShoppingBag className="h-4 w-4" />}>
+                Browse All Products
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Heritage story */}
+      <section className="mx-auto max-w-4xl px-4 py-16 text-center">
+        <p className="text-xs font-semibold uppercase tracking-wider text-brand">Our Heritage</p>
+        <h2 className="mt-2 font-display text-2xl text-charcoal">
+          From the Kitchens of Rajasthan
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-warm-gray">
+          Every product we carry is rooted in centuries of Rajasthani culinary tradition.
+          From the royal kitchens of Jaipur to the desert haveli of Jodhpur — we bring
+          authentic flavours made with time-honoured recipes and locally sourced ingredients.
+        </p>
+        <Link to="/about" className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-brand hover:text-brand-dark">
+          Read our story <ChevronRight className="h-4 w-4" />
+        </Link>
+      </section>
     </div>
   )
 }
