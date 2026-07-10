@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ShoppingCart, Check } from 'lucide-react'
+import { ShoppingCart, Check, Heart } from 'lucide-react'
 import clsx from 'clsx'
 import type { Product } from '../../types'
 import { Badge } from '../ui/Badge'
 import { useCart } from '../../context/CartContext'
 import { useToast } from '../../context/ToastContext'
+import { useWishlist } from '../../context/WishlistContext'
 
 interface ProductCardProps {
   product: Product
@@ -14,8 +15,15 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart()
   const { success } = useToast()
+  const { isWishlisted, toggle } = useWishlist()
   const [added, setAdded] = useState(false)
   const [imgError, setImgError] = useState(false)
+
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault()
+    const now = toggle(product.id)
+    success(now ? `${product.nameEn} saved to wishlist` : `Removed from wishlist`)
+  }
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -49,6 +57,19 @@ export function ProductCard({ product }: ProductCardProps) {
             Featured
           </span>
         )}
+        {/* Wishlist button */}
+        <button
+          onClick={handleWishlist}
+          className={clsx(
+            'absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full shadow transition-colors',
+            isWishlisted(product.id)
+              ? 'bg-red-500 text-white'
+              : 'bg-white/90 text-warm-gray hover:text-red-400',
+          )}
+          aria-label={isWishlisted(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+        >
+          <Heart className={clsx('h-3.5 w-3.5', isWishlisted(product.id) && 'fill-current')} />
+        </button>
         {product.stock === 0 && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/40">
             <Badge variant="error">Out of Stock</Badge>

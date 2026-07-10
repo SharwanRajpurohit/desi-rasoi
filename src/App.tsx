@@ -4,6 +4,8 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { ToastProvider } from './context/ToastContext'
 import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
+import { WishlistProvider } from './context/WishlistContext'
+import { ErrorBoundary } from './components/ui/ErrorBoundary'
 
 import { CustomerLayout } from './components/layout/CustomerLayout'
 import { AdminLayout } from './components/layout/AdminLayout'
@@ -21,6 +23,7 @@ const Cart          = lazy(() => import('./pages/customer/Cart'))
 const Checkout      = lazy(() => import('./pages/customer/Checkout'))
 const Orders        = lazy(() => import('./pages/customer/Orders'))
 const OrderDetail   = lazy(() => import('./pages/customer/OrderDetail'))
+const Wishlist      = lazy(() => import('./pages/customer/Wishlist'))
 const Login         = lazy(() => import('./pages/customer/Login'))
 const About         = lazy(() => import('./pages/customer/About'))
 const Contact       = lazy(() => import('./pages/customer/Contact'))
@@ -76,9 +79,11 @@ function AL({ children }: { children: ReactNode }) {
 
 export default function App() {
   return (
+    <ErrorBoundary>
     <ToastProvider>
       <AuthProvider>
         <CartProvider>
+        <WishlistProvider>
           <Suspense fallback={<PageLoader />}>
             <Routes>
 
@@ -88,6 +93,7 @@ export default function App() {
               <Route path="/products/:slug"   element={<CL><ProductDetail /></CL>} />
               <Route path="/categories/:slug" element={<CL><Category /></CL>} />
               <Route path="/cart"             element={<CL><Cart /></CL>} />
+              <Route path="/wishlist"         element={<CL><Wishlist /></CL>} />
               <Route path="/login"            element={<CL><Login /></CL>} />
               <Route path="/about"            element={<CL><About /></CL>} />
               <Route path="/contact"          element={<CL><Contact /></CL>} />
@@ -112,8 +118,10 @@ export default function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
+        </WishlistProvider>
         </CartProvider>
       </AuthProvider>
     </ToastProvider>
+    </ErrorBoundary>
   )
 }

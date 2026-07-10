@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { ShoppingCart, User, Menu, X, ChefHat, LogOut } from 'lucide-react'
+import { ShoppingCart, User, Menu, X, ChefHat, LogOut, Heart } from 'lucide-react'
 import clsx from 'clsx'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
+import { useWishlist } from '../../context/WishlistContext'
 
 const NAV_LINKS = [
   { to: '/', label: 'Home', end: true },
@@ -14,6 +15,7 @@ const NAV_LINKS = [
 export function Header() {
   const { itemCount } = useCart()
   const { customer, signOut } = useAuth()
+  const { count: wishlistCount } = useWishlist()
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -57,6 +59,20 @@ export function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
+          {/* Wishlist */}
+          <Link
+            to="/wishlist"
+            className="relative hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-warm-gray hover:bg-sand hover:text-red-400 transition-colors"
+            aria-label={`Wishlist — ${wishlistCount} items`}
+          >
+            <Heart className={clsx('h-5 w-5', wishlistCount > 0 && 'fill-red-400 text-red-400')} />
+            {wishlistCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-400 text-[9px] font-bold text-white">
+                {wishlistCount > 9 ? '9+' : wishlistCount}
+              </span>
+            )}
+          </Link>
+
           {/* Cart */}
           <Link
             to="/cart"

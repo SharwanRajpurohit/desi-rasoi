@@ -155,3 +155,19 @@ export interface ProductFilters {
   featuredOnly?: boolean
   activeOnly?: boolean
 }
+
+// ─── Review ────────────────────────────────────────────────────────────────────
+
+export interface Review {
+  id: string
+  productId: string
+  customerId: string
+  customerName: string
+  rating: number          // 1–5
+  comment: string
+  createdAt: string
+}
+
+// ─── Wishlist ──────────────────────────────────────────────────────────────────
+
+export type WishlistItem = string   // productId

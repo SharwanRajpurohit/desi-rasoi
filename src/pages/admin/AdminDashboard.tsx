@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Package, IndianRupee, AlertTriangle, ChevronRight } from 'lucide-react'
-import { getOrderStats } from '../../services/orders'
+import { getOrderStats, getOrders } from '../../services/orders'
 import { getLowStockProducts } from '../../services/products'
-import { getOrders } from '../../services/orders'
 import type { OrderStats, Order, Product } from '../../types'
 import { Badge } from '../../components/ui/Badge'
 import { Skeleton } from '../../components/ui/Skeleton'
+import { RevenueChart } from '../../components/admin/RevenueChart'
 
 // ─── KPI Card ─────────────────────────────────────────────────────────────────
 
@@ -102,6 +102,9 @@ export default function AdminDashboard() {
           </>
         )}
       </div>
+
+      {/* Revenue chart */}
+      {!loading && <RevenueChart orders={recentOrders} />}
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Recent orders */}

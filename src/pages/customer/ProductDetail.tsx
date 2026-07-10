@@ -1,39 +1,56 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { ShoppingCart, ChevronRight, Minus, Plus, Check } from 'lucide-react'
+import { ShoppingCart, ChevronRight, Minus, Plus, Check, Heart } from 'lucide-react'
+import clsx from 'clsx'
 import type { Product, Category } from '../../types'
-import { getProductBySlug } from '../../services/products'
+import { getProductBySlug, getProducts } from '../../services/products'
 import { getCategoryById } from '../../services/categories'
 import { useCart } from '../../context/CartContext'
 import { useToast } from '../../context/ToastContext'
+import { useWishlist } from '../../context/WishlistContext'
 import { Badge } from '../../components/ui/Badge'
 import { Button } from '../../components/ui/Button'
 import { Skeleton } from '../../components/ui/Skeleton'
+import { ReviewSection } from '../../components/customer/ReviewSection'
+import { ProductGrid } from '../../components/customer/ProductGrid'
 
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
   const { addToCart } = useCart()
   const { success, error } = useToast()
+  const { isWishlisted, toggle: toggleWishlist } = useWishlist()
 
-  const [product, setProduct]   = useState<Product | null>(null)
-  const [category, setCategory] = useState<Category | null>(null)
-  const [qty, setQty]           = useState(1)
-  const [loading, setLoading]   = useState(true)
-  const [imgError, setImgError] = useState(false)
-  const [added, setAdded]       = useState(false)
+  const [product, setProduct]     = useState<Product | null>(null)
+  const [category, setCategory]   = useState<Category | null>(null)
+  const [related, setRelated]     = useState<Product[]>([])
+  const [qty, setQty]             = useState(1)
+  const [loading, setLoading]     = useState(true)
+  const [imgError, setImgError]   = useState(false)
+  const [added, setAdded]         = useState(false)
 
   useEffect(() => {
     if (!slug) return
     setLoading(true)
+    setRelated([])
     getProductBySlug(slug).then(async (p) => {
       if (!p) { navigate('/products', { replace: true }); return }
       setProduct(p)
-      const cat = await getCategoryById(p.categoryId)
+      const [cat, rel] = await Promise.all([
+        getCategoryById(p.categoryId),
+        getProducts({ categoryId: p.categoryId }),
+      ])
       setCategory(cat)
+      setRelated(rel.filter((r) => r.id !== p.id).slice(0, 4))
       setLoading(false)
     })
   }, [slug, navigate])
+
+  const handleWishlist = () => {
+    if (!product) return
+    const now = toggleWishlist(product.id)
+    success(now ? `${product.nameEn} saved to wishlist` : 'Removed from wishlist')
+  }
 
   const handleAdd = () => {
     if (!product || product.stock === 0) return
@@ -168,6 +185,18 @@ export default function ProductDetail() {
                 >
                   {added ? 'Added to Cart!' : `Add to Cart — ₹${(product.price * qty).toLocaleString('en-IN')}`}
                 </Button>
+                <button
+                  onClick={handleWishlist}
+                  className={clsx(
+                    'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border transition-colors',
+                    isWishlisted(product.id)
+                      ? 'border-red-300 bg-red-50 text-red-500'
+                      : 'border-sand-dark text-warm-gray hover:border-red-300 hover:text-red-400',
+                  )}
+                  aria-label="Toggle wishlist"
+                >
+                  <Heart className={clsx('h-5 w-5', isWishlisted(product.id) && 'fill-current')} />
+                </button>
               </div>
             </>
           )}
@@ -179,6 +208,19 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
+
+      {/* Reviews */}
+      <ReviewSection productId={product.id} />
+
+      {/* Related products */}
+      {related.length > 0 && (
+        <div className="mt-14">
+          <h2 className="mb-6 font-display text-2xl text-charcoal">
+            More from {category?.nameEn ?? 'this category'}
+          </h2>
+          <ProductGrid products={related} loading={false} />
+        </div>
+      )}
 
       {/* Mobile sticky bar */}
       {inStock && (
