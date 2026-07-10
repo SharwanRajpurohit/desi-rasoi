@@ -6,13 +6,15 @@
 [![React](https://img.shields.io/badge/React-18+-61dafb)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-5+-646cff)](https://vitejs.dev/)
 
+**Live demo:** https://sharwanrajpurohit.github.io/desi-rasoi/
+
 ---
 
 ## Overview
 
 **Desi Rasoi** is a demo e-commerce platform for authentic traditional Rajasthani food products — *dal baati churma*, *ghevar*, *ker sangri*, *bajra roti*, *mawa kachori*, pickles, papad, and more.
 
-This repository contains the **complete design specification** and **development plan** for building a static site hosted on **GitHub Pages**, with separate **Customer** and **Admin** experiences.
+This repository contains the **complete design specification** and a **working React scaffold** (Phase 0 complete) for a static site on **GitHub Pages**, with separate **Customer** and **Admin** experiences.
 
 | Attribute | Value |
 |-----------|-------|
@@ -21,6 +23,22 @@ This repository contains the **complete design specification** and **development
 | **Data** | Client-side (localStorage + JSON seed) |
 | **Auth** | Demo-only (localStorage session) |
 | **Target** | Portfolio / demo / pitch deck |
+| **Status** | Phase 0 complete — scaffold live |
+
+---
+
+## Getting Started
+
+```bash
+git clone https://github.com/SharwanRajpurohit/desi-rasoi.git
+cd desi-rasoi
+npm install
+npm run dev          # Local dev server at http://localhost:5173
+npm run build        # Production build → dist/
+npm run preview      # Preview production build
+```
+
+**Requirements:** Node.js 18+ (20 LTS recommended)
 
 ---
 
@@ -28,22 +46,18 @@ This repository contains the **complete design specification** and **development
 
 ```
 desi-rasoi/
-├── README.md                    ← You are here
-├── docs/
-│   ├── DESIGN.md                ← Full design specification
-│   ├── DEVELOPMENT-PLAN.md      ← Phased build plan
-│   ├── WIREFRAMES.md            ← Page layouts & user flows
-│   ├── DATA-MODEL.md            ← Entities, schemas, sample data
-│   └── API-SIMULATION.md        ← How static "backend" works
-├── design/
-│   ├── brand/
-│   │   ├── COLORS.md            ← Color palette & typography
-│   │   └── COMPONENTS.md        ← UI component library spec
-│   └── assets/
-│       └── mockups/             ← Placeholder for future mockups
-└── .github/
-    └── workflows/
-        └── pages.yml            ← GitHub Pages deploy workflow (planned)
+├── src/                         ← React application
+│   ├── pages/customer/          ← Customer pages
+│   ├── pages/admin/             ← Admin pages
+│   └── data/seed.json           ← Sample product data
+├── docs/                        ← Design & development docs
+├── design/brand/                ← Brand guide & components
+├── public/                      ← Static assets
+├── .github/workflows/pages.yml  ← GitHub Pages deploy
+├── index.html
+├── vite.config.ts
+├── tailwind.config.js
+└── package.json
 ```
 
 ---
@@ -81,30 +95,17 @@ desi-rasoi/
 
 ---
 
-## Tech Stack (Planned)
+## Tech Stack
 
-| Layer | Choice | Why |
-|-------|--------|-----|
-| Framework | React 18 + Vite | Fast dev, SPA routing, GitHub Pages compatible |
-| Routing | React Router v6 | Customer + admin route separation |
-| Styling | Tailwind CSS | Rapid UI, responsive, brand tokens |
-| State | React Context + hooks | Cart, auth, orders — no server needed |
-| Persistence | localStorage | Demo data survives page refresh |
-| Icons | Lucide React | Lightweight, consistent |
-| Deploy | GitHub Actions → Pages | Free, automatic on push to `main` |
-
----
-
-## Getting Started (After Implementation)
-
-```bash
-git clone https://github.com/<your-username>/desi-rasoi.git
-cd desi-rasoi
-npm install
-npm run dev          # Local dev server
-npm run build        # Production build → dist/
-npm run preview      # Preview production build
-```
+| Layer | Choice | Status |
+|-------|--------|--------|
+| Framework | React 18 + Vite | ✅ Configured |
+| Routing | React Router v6 | ✅ Customer + admin routes |
+| Styling | Tailwind CSS | ✅ Brand tokens applied |
+| State | React Context + hooks | Phase 2 |
+| Persistence | localStorage | Phase 1 |
+| Icons | Lucide React | ✅ Installed |
+| Deploy | GitHub Actions → Pages | ✅ Workflow ready |
 
 ---
 

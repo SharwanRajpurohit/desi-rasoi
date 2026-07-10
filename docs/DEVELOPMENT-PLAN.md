@@ -11,13 +11,13 @@ This plan breaks the static e-commerce site into **6 phases**, each delivering a
 **Goal:** Runnable React + Vite + Tailwind project, deployable to GitHub Pages
 
 ### Tasks
-- [ ] Initialize Vite React TypeScript project in repo root (or `/app` subfolder)
-- [ ] Configure Tailwind CSS with brand color tokens
-- [ ] Set up React Router with `BrowserRouter` + `basename` for GitHub Pages
-- [ ] Add `vite.config.ts` with `base: '/desi-rasoi/'`
-- [ ] Create GitHub Actions workflow (`.github/workflows/pages.yml`)
-- [ ] Add `.gitignore`, `LICENSE` (MIT), ESLint config
-- [ ] Verify `npm run build` succeeds
+- [x] Initialize Vite React TypeScript project in repo root (or `/app` subfolder)
+- [x] Configure Tailwind CSS with brand color tokens
+- [x] Set up React Router with `BrowserRouter` + `basename` for GitHub Pages
+- [x] Add `vite.config.ts` with `base: '/desi-rasoi/'`
+- [x] Create GitHub Actions workflow (`.github/workflows/pages.yml`)
+- [x] Add `.gitignore`, `LICENSE` (MIT), ESLint config
+- [x] Verify `npm run build` succeeds
 - [ ] Push to GitHub, confirm Pages deploys
 
 ### Deliverable
