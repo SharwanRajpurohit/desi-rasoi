@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ShoppingBag, ChevronRight } from 'lucide-react'
+import { ChevronRight, ShoppingBag } from 'lucide-react'
 import type { Product } from '../../types'
 import { getFeaturedProducts } from '../../services/products'
 import { Button } from '../../components/ui/Button'
 import { ProductCard } from '../../components/customer/ProductCard'
 import { ProductCardSkeleton } from '../../components/ui/Skeleton'
 import { useDocumentTitle } from '../../hooks/useDocumentTitle'
+import { HeroCarousel } from '../../components/customer/HeroCarousel'
 
 const CATEGORIES = [
   { slug: 'sweets',       icon: '🍬', nameEn: 'Sweets & Mithai' },
@@ -30,37 +31,8 @@ export default function Home() {
 
   return (
     <div>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand via-brand-dark to-indigo px-4 py-20 text-white">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-5"
-          style={{ backgroundImage: 'radial-gradient(circle at 20px 20px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}
-        />
-        <div className="relative mx-auto max-w-4xl text-center">
-          <span className="inline-block rounded-full bg-white/10 px-4 py-1 text-sm font-medium backdrop-blur mb-4">
-            🏺 Traditional · Authentic · Rajasthani
-          </span>
-          <h1 className="font-display text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
-            Taste of Rajasthan
-          </h1>
-          <p className="mt-2 font-hindi text-xl text-white/80">राजस्थान का स्वाद, आपके द्वार</p>
-          <p className="mx-auto mt-5 max-w-xl text-lg text-white/80">
-            Authentic traditional food — from Ghevar to Ker Sangri — crafted in Rajasthani kitchens and delivered to your door.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link to="/products">
-              <Button size="lg" variant="secondary" icon={<ShoppingBag className="h-5 w-5" />}>
-                Shop Now
-              </Button>
-            </Link>
-            <Link to="/about">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand">
-                Our Story
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Hero Carousel */}
+      <HeroCarousel />
 
       {/* Categories */}
       <section className="mx-auto max-w-6xl px-4 py-14">
