@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
 import { Package, ChevronRight } from 'lucide-react'
 import type { Order } from '../../types'
@@ -19,6 +20,7 @@ const STATUS_VARIANT: Record<string, BadgeVariant> = {
 }
 
 export default function Orders() {
+  useDocumentTitle('My Orders')
   const { customer } = useAuth()
   const navigate = useNavigate()
   const [orders, setOrders] = useState<Order[]>([])
@@ -77,3 +79,5 @@ export default function Orders() {
     </div>
   )
 }
+
+

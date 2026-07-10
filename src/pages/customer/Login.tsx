@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { ChefHat } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
@@ -7,6 +8,7 @@ import { Input } from '../../components/ui/Input'
 import { Button } from '../../components/ui/Button'
 
 export default function Login() {
+  useDocumentTitle('Sign In')
   const { signIn, customer } = useAuth()
   const { success, error } = useToast()
   const navigate = useNavigate()
@@ -95,3 +97,4 @@ export default function Login() {
     </div>
   )
 }
+

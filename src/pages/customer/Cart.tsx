@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { Link, useNavigate } from 'react-router-dom'
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react'
 import type { CartSummary } from '../../types'
@@ -9,6 +10,7 @@ import { Skeleton } from '../../components/ui/Skeleton'
 import { EmptyState } from '../../components/ui/EmptyState'
 
 export default function Cart() {
+  useDocumentTitle('My Cart')
   const { cart, updateQuantity, removeFromCart } = useCart()
   const navigate = useNavigate()
   const [summary, setSummary] = useState<CartSummary | null>(null)
@@ -148,3 +150,5 @@ export default function Cart() {
     </div>
   )
 }
+
+

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { Link, useNavigate } from 'react-router-dom'
-import { Plus, Pencil, Trash2, Search, AlertTriangle } from 'lucide-react'
+import { Plus, Pencil, Trash2, Search, AlertTriangle, Download } from 'lucide-react'
 import type { Product, Category } from '../../types'
 import { getAllProducts, deleteProduct } from '../../services/products'
 import { getCategories } from '../../services/categories'
+import { exportProductsCSV } from '../../services/export'
 import { useToast } from '../../context/ToastContext'
 import { Badge } from '../../components/ui/Badge'
 import { Button } from '../../components/ui/Button'
@@ -18,6 +20,7 @@ function stockVariant(stock: number) {
 }
 
 export default function AdminProducts() {
+  useDocumentTitle('Products — Admin')
   const navigate = useNavigate()
   const { success, error } = useToast()
 
@@ -68,9 +71,20 @@ export default function AdminProducts() {
           <h1 className="font-display text-2xl text-charcoal">Products</h1>
           <p className="text-sm text-warm-gray">{products.length} total products</p>
         </div>
-        <Button icon={<Plus className="h-4 w-4" />} onClick={() => navigate('/admin/products/new')}>
-          Add Product
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            icon={<Download className="h-4 w-4" />}
+            onClick={() => exportProductsCSV(filtered)}
+            disabled={filtered.length === 0}
+          >
+            Export CSV
+          </Button>
+          <Button icon={<Plus className="h-4 w-4" />} onClick={() => navigate('/admin/products/new')}>
+            Add Product
+          </Button>
+        </div>
       </div>
 
       {/* Filters */}
@@ -191,3 +205,4 @@ export default function AdminProducts() {
     </div>
   )
 }
+

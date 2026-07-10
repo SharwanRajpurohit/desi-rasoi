@@ -14,3 +14,26 @@
     @apply font-display;
   }
 }
+
+@media print {
+  /* Hide navigation, footer, buttons when printing */
+  header,
+  footer,
+  nav,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Ensure cards print without shadows */
+  .shadow-card,
+  .shadow-sm,
+  .shadow-md {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+}

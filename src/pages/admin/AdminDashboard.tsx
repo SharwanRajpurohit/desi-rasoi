@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
 import { Package, IndianRupee, AlertTriangle, ChevronRight } from 'lucide-react'
 import { getOrderStats, getOrders } from '../../services/orders'
@@ -58,6 +59,7 @@ const STATUS_LABEL: Record<string, string> = {
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 
 export default function AdminDashboard() {
+  useDocumentTitle('Dashboard')
   const [stats, setStats] = useState<OrderStats | null>(null)
   const [recentOrders, setRecentOrders] = useState<Order[]>([])
   const [lowStock, setLowStock] = useState<Product[]>([])
@@ -180,3 +182,4 @@ export default function AdminDashboard() {
     </div>
   )
 }
+

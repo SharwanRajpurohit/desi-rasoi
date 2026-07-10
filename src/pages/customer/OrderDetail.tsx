@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { ChevronRight, MapPin, Phone, Package } from 'lucide-react'
+import { ChevronRight, MapPin, Phone, Package, Printer } from 'lucide-react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import type { Order } from '../../types'
 import { getOrderById } from '../../services/orders'
 import { useAuth } from '../../context/AuthContext'
@@ -30,6 +31,8 @@ export default function OrderDetail() {
   const navigate = useNavigate()
   const [order, setOrder]   = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
+
+  useDocumentTitle(order ? `Order ${order.orderNumber}` : 'Order Details')
 
   useEffect(() => {
     if (!id) return
@@ -162,12 +165,15 @@ export default function OrderDetail() {
         )}
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3 print:hidden">
         <Button variant="outline" icon={<Package className="h-4 w-4" />} onClick={() => navigate('/orders')}>
           All Orders
         </Button>
         <Button icon={<Package className="h-4 w-4" />} onClick={() => navigate('/products')}>
           Shop Again
+        </Button>
+        <Button variant="ghost" icon={<Printer className="h-4 w-4" />} onClick={() => window.print()}>
+          Print Invoice
         </Button>
       </div>
     </div>

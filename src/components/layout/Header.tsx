@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { ShoppingCart, User, Menu, X, ChefHat, LogOut, Heart } from 'lucide-react'
+import { ShoppingCart, User, Menu, X, ChefHat, LogOut, Heart, Search } from 'lucide-react'
 import clsx from 'clsx'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
 import { useWishlist } from '../../context/WishlistContext'
+import { SearchModal } from './SearchModal'
 
 const NAV_LINKS = [
   { to: '/', label: 'Home', end: true },
@@ -17,7 +18,19 @@ export function Header() {
   const { customer, signOut } = useAuth()
   const { count: wishlistCount } = useWishlist()
   const navigate = useNavigate()
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen]     = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [])
 
   const handleSignOut = () => {
     signOut()
@@ -59,6 +72,17 @@ export function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
+          {/* Search */}
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="flex h-9 items-center gap-2 rounded-lg border border-sand-dark bg-white px-3 text-sm text-warm-gray hover:border-brand hover:text-brand transition-colors"
+            aria-label="Search products"
+          >
+            <Search className="h-4 w-4" />
+            <span className="hidden sm:inline">Search</span>
+            <kbd className="hidden rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-mono text-slate-400 sm:inline">⌘K</kbd>
+          </button>
+
           {/* Wishlist */}
           <Link
             to="/wishlist"
@@ -125,6 +149,9 @@ export function Header() {
           </button>
         </div>
       </div>
+
+      {/* Global search modal */}
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       {/* Mobile menu */}
       {menuOpen && (

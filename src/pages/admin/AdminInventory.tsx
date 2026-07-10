@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { Minus, Plus, RotateCcw } from 'lucide-react'
 import type { Product, Category } from '../../types'
 import { getAllProducts, adjustStock } from '../../services/products'
@@ -16,6 +17,7 @@ function stockVariant(stock: number) {
 interface RowState { adjusting: boolean; delta: string }
 
 export default function AdminInventory() {
+  useDocumentTitle('Inventory — Admin')
   const { success, error } = useToast()
 
   const [products, setProducts]     = useState<Product[]>([])
@@ -178,3 +180,4 @@ export default function AdminInventory() {
     </div>
   )
 }
+

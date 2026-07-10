@@ -6,6 +6,7 @@ import { getFeaturedProducts } from '../../services/products'
 import { Button } from '../../components/ui/Button'
 import { ProductCard } from '../../components/customer/ProductCard'
 import { ProductCardSkeleton } from '../../components/ui/Skeleton'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 
 const CATEGORIES = [
   { slug: 'sweets',       icon: '🍬', nameEn: 'Sweets & Mithai' },
@@ -19,6 +20,7 @@ const CATEGORIES = [
 ]
 
 export default function Home() {
+  useDocumentTitle()
   const [featured, setFeatured] = useState<Product[]>([])
   const [loading, setLoading]   = useState(true)
 

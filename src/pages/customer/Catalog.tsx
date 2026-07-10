@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { Search, SlidersHorizontal } from 'lucide-react'
 import type { Product, Category, SortOption } from '../../types'
 import { getProducts } from '../../services/products'
@@ -15,6 +16,7 @@ const SORT_OPTIONS = [
 ]
 
 export default function Catalog() {
+  useDocumentTitle('All Products')
   const [products, setProducts]     = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading]       = useState(true)
@@ -103,3 +105,5 @@ export default function Catalog() {
     </div>
   )
 }
+
+

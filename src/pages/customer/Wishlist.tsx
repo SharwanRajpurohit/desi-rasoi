@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { Heart } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import type { Product } from '../../types'
@@ -8,6 +9,7 @@ import { ProductGrid } from '../../components/customer/ProductGrid'
 import { EmptyState } from '../../components/ui/EmptyState'
 
 export default function Wishlist() {
+  useDocumentTitle('Wishlist')
   const { wishlist } = useWishlist()
   const navigate = useNavigate()
   const [products, setProducts] = useState<Product[]>([])
@@ -46,3 +48,5 @@ export default function Wishlist() {
     </div>
   )
 }
+
+

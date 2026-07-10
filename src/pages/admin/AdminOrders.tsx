@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
-import { Search } from 'lucide-react'
+import { Search, Download } from 'lucide-react'
 import type { Order } from '../../types'
 import { getOrders } from '../../services/orders'
+import { exportOrdersCSV } from '../../services/export'
 import { Badge, type BadgeVariant } from '../../components/ui/Badge'
 import { Select } from '../../components/ui/Select'
 import { Skeleton } from '../../components/ui/Skeleton'
+import { Button } from '../../components/ui/Button'
 
 const STATUS_OPTIONS = [
   { value: '', label: 'All Statuses' },
@@ -27,6 +30,7 @@ const STATUS_VARIANT: Record<string, BadgeVariant> = {
 }
 
 export default function AdminOrders() {
+  useDocumentTitle('Orders — Admin')
   const [orders, setOrders]   = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch]   = useState('')
@@ -45,9 +49,20 @@ export default function AdminOrders() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="font-display text-2xl text-charcoal">Orders</h1>
-        <p className="text-sm text-warm-gray">{orders.length} total orders</p>
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="font-display text-2xl text-charcoal">Orders</h1>
+          <p className="text-sm text-warm-gray">{orders.length} total orders</p>
+        </div>
+        <Button
+          size="sm"
+          variant="outline"
+          icon={<Download className="h-4 w-4" />}
+          onClick={() => exportOrdersCSV(filtered)}
+          disabled={filtered.length === 0}
+        >
+          Export CSV
+        </Button>
       </div>
 
       {/* Filters */}
@@ -125,3 +140,4 @@ export default function AdminOrders() {
     </div>
   )
 }
+

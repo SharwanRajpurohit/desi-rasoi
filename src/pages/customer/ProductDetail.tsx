@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { ShoppingCart, ChevronRight, Minus, Plus, Check, Heart } from 'lucide-react'
 import clsx from 'clsx'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import type { Product, Category } from '../../types'
 import { getProductBySlug, getProducts } from '../../services/products'
 import { getCategoryById } from '../../services/categories'
@@ -22,6 +23,8 @@ export default function ProductDetail() {
   const { isWishlisted, toggle: toggleWishlist } = useWishlist()
 
   const [product, setProduct]     = useState<Product | null>(null)
+
+  useDocumentTitle(product?.nameEn)
   const [category, setCategory]   = useState<Category | null>(null)
   const [related, setRelated]     = useState<Product[]>([])
   const [qty, setQty]             = useState(1)

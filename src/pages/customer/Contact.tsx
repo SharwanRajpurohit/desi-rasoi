@@ -1,9 +1,11 @@
 import { useState, type FormEvent } from 'react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { useToast } from '../../context/ToastContext'
 import { Input } from '../../components/ui/Input'
 import { Button } from '../../components/ui/Button'
 
 export default function Contact() {
+  useDocumentTitle('Contact Us')
   const { success } = useToast()
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -58,3 +60,4 @@ export default function Contact() {
     </div>
   )
 }
+

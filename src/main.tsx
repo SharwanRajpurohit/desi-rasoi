@@ -13,6 +13,15 @@ initializeIfNeeded()
 // Start background order status simulation
 startOrderSimulation()
 
+// Register service worker for PWA / offline support
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => {
+      // SW registration is best-effort; failures are non-fatal
+    })
+  })
+}
+
 const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
 
 createRoot(document.getElementById('root')!).render(

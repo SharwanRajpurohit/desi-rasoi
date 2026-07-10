@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { Plus, Pencil, Trash2, X, Check } from 'lucide-react'
 import type { Category } from '../../types'
 import { getAllCategories, createCategory, updateCategory, deleteCategory } from '../../services/categories'
@@ -16,6 +17,7 @@ function slugify(s: string) {
 }
 
 export default function AdminCategories() {
+  useDocumentTitle('Categories — Admin')
   const { success, error } = useToast()
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading]       = useState(true)
@@ -171,3 +173,4 @@ export default function AdminCategories() {
     </div>
   )
 }
+
